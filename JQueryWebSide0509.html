@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wielki quiz wiedzy o Mario</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <div id="Top_Bar">
+        <div id="top_bar_content">
+            <div id="mario_png">
+                <img src="mario-icon-logo-png_seeklogo-482092.png" width="150px" height="150px">
+            </div>
+            <div id="quiz_title">
+                <h1 class="display-4 mb-0">Quiz Wiedzy o Mario</h1> 
+            </div>
+        </div>
+    </div>
+
+    <div id="white_block"><p>Tralaleo Tralala</p></div>
+    <div id="main_block">
+        <div id="quiz">
+            <h2 id="question"></h2>
+            <div id="answers"></div>
+            <div id="result"></div>
+        </div>
+    </div>
+    <div id="white_block"><p>Tralaleo Tralala</p></div>
+    <footer id="footer">
+        <h5>©2025</h5>
+        <h6>Niniejszy projekt został przygotowany wyłącznie w celach edukacyjnych jako część zadania szkolnego. Wizerunek postaci Mario oraz inne elementy graficzne należą do Nintendo Co., Ltd. i są chronione prawem autorskim oraz znakami towarowymi. Projekt nie ma charakteru komercyjnego i nie jest przeznaczony do rozpowszechniania poza środowiskiem edukacyjnym. Wszelkie prawa do wykorzystanych materiałów należą do ich prawowitych właścicieli.</h6>
+    </footer>
+    <script>
+        $(document).ready(function(){
+            const quiz = [
+                { pytanie: "W jakiej grze pierwszy raz pojawił sie Super Mario?", odpowiedzi: ["Mario Bros", "Super Mario Bros" , "Donkey Kong" , "Popeye"], poprawna: 3},
+                { pytanie: "Jaką ilość miejsca zajmuje Super Mario Bros na nes?", odpowiedzi: ["512 KB", "32 KB" , "1 MB" , "2,1 KB"], poprawna: 2},
+                { pytanie: "Czy istniała gra Mario Hotel?", odpowiedzi: ["Tak","Nie"], poprawna: 1 },
+                { pytanie: "Ojcem Mario jest? ", odpowiedzi: ["Shigeru Miyamoto", "Satoru Iwata", "Sakoshi Tadashi", "Ken Sugimori"], poprawna: 1 },
+                { pytanie: "Skąd pochodzi Mario", odpowiedzi: ["Z Polski", "Z Japonii", "Z USA", " Z Włoch"], poprawna: 4 },
+            ];
+            let index = 0;
+            let punkty = 0;
+            function pokazpytanie() {
+                if (index < quiz.length) {
+                    $("#question").text(quiz[index].pytanie);
+                    $("#answers").empty();
+                    quiz[index].odpowiedzi.forEach((odp, i) => {
+                        const btn = $(`<button class="answer" data-id="${i+1}">${odp}</button>`);
+                        $("#answers").append(btn);
+                        btn.click(function() {
+                            const userChoice = parseInt($(this).attr("data-id"));
+                            if (userChoice === quiz[index].poprawna) {
+                                punkty++;
+                            }
+                            index++;
+                            pokazpytanie();
+                        });
+                    });
+                } else {
+                    $("#quiz").hide();
+                    $("#result").text(`Zdobyłeś ${punkty} z ${quiz.length} możliwych`);
+                }
+            }
+            pokazpytanie();
+        });
+    </script>
+</body>
+</html>
